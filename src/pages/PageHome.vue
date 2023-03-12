@@ -109,7 +109,7 @@ export default defineComponent({
       // .catch(error => console.log(error))
 
       this.$axios
-        .get("https://quasagram-backend.onrender.com/posts")
+        .get(`${process.env.API}/posts`)
         .then((result) => {
           this.posts = result.data;
           this.loadingPosts = false;
