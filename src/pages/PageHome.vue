@@ -63,7 +63,7 @@ export default defineComponent({
           caption: "Golden Gate Bridge",
           date: 1678541530377,
           location: "South Beach",
-          imageUrl: "https://cdn.quasar.dev/img/parallax2.jpg",
+          imageUrl: "https://i.imgur.com/g5hCI2D.jpeg",
         },
         {
           id: 2,
