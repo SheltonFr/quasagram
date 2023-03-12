@@ -9,6 +9,9 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 
+let API_LOCAL  = 'http://localhost:3000'
+let API_PRODUCTION = 'https://quasagram-backend.onrender.com'
+
 const { configure } = require('quasar/wrappers');
 
 
@@ -54,8 +57,7 @@ module.exports = configure(function (/* ctx */) {
       },
 
       env: {
-        // API: 'http://localhost:3000',
-        API: 'https://quasagram-backend.onrender.com',
+        API: API_LOCAL, // API_LOCAL or API_PRODUCTION
       },
 
       vueRouterMode: 'hash', // available values: 'hash', 'history'
@@ -104,7 +106,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Dialog']
+      plugins: ['Dialog', 'Notify', 'Loading']
     },
 
     // animations: 'all', // --- includes all animations

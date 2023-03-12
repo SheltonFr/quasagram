@@ -22,6 +22,7 @@
         size="lg"
         color="grey-10"
         @click="captureImage"
+        :disable="imageCaptured"
         icon="eva-camera"
       />
 
@@ -44,7 +45,7 @@
           dense
           class="col col-sm-8"
           v-model="post.caption"
-          label="Caption"
+          label="Caption*"
         />
       </div>
 
@@ -70,7 +71,14 @@
       </div>
 
       <div class="row justify-center q-mt-lg">
-        <q-btn unelevated rounded color="primary" label="Post Image" />
+        <q-btn
+          unelevated
+          @click="addPost"
+          :disable="!post.caption || !post.photo"
+          rounded
+          color="primary"
+          label="Post Image"
+        />
       </div>
     </div>
   </q-page>
@@ -81,7 +89,6 @@ import { defineComponent } from "vue";
 import { uid } from "quasar";
 import "md-gum-polyfill";
 import axios from "axios";
-
 
 export default defineComponent({
   name: "PageCamera",
@@ -186,7 +193,7 @@ export default defineComponent({
       axios
         .get(apiUrl)
         .then((result) => this.locationSuccess(result.data))
-        .catch((error) => this.locationError())
+        .catch((error) => this.locationError());
     },
 
     locationSuccess(locationData) {
@@ -195,20 +202,19 @@ export default defineComponent({
       if (locationData.country) {
         this.post.location += `, ${locationData.country}`;
       }
-      this.locationLoading = false
+      this.locationLoading = false;
     },
 
     locationError() {
-
       this.$q.dialog({
-        title: 'Error',
-        message: 'Could not found your location!'
-      })
-      this.locationLoading = false
+        title: "Error",
+        message: "Could not found your location!",
+      });
+      this.locationLoading = false;
     },
 
     getLocation() {
-      this.locationLoading = true
+      this.locationLoading = true;
       navigator.geolocation.getCurrentPosition(
         (position) => {
           this.getCityAndCountry(position);
@@ -217,13 +223,44 @@ export default defineComponent({
         { timeout: 7000 }
       );
     },
+
+    addPost() {
+      this.$q.loading.show();
+
+      let formData = new FormData();
+      formData.append("id", this.post.id);
+      formData.append("caption", this.post.caption);
+      formData.append("date", this.post.date);
+      formData.append("location", this.post.location);
+      formData.append("file", this.post.photo, this.post.id + ".png");
+
+      this.$axios
+        .post(`${process.env.API}/createPost`, formData)
+        .then((response) => {
+          this.$router.push("/");
+
+          this.$q.notify({
+            message: "Post created!",
+            actions: [{ label: "Dismiss", color: "white" }],
+          });
+
+          this.$q.loading.hide();
+        })
+        .catch((err) => {
+          this.$q.dialog({
+            title: "Error",
+            message: "Sorry, could not create post!!",
+          });
+          this.$q.loading.hide();
+        });
+    },
   },
 
   computed: {
     locationSupported() {
-      if('geolocation' in navigator) return true
+      if ("geolocation" in navigator) return true;
       return false;
-    }
+    },
   },
 
   mounted() {
