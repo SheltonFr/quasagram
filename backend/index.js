@@ -42,7 +42,7 @@ const bucket = getStorage().bucket();
 
 
 app.get('/posts', async (req, res) => {
-  res.set("Access-Control-Allow-Origin", "*")
+  res.setHeader("Access-Control-Allow-Origin", "*")
   let posts = []
   const snapshot = await db.collection('posts').orderBy('date', 'desc').get();
   snapshot.forEach((doc) => {
@@ -58,7 +58,7 @@ app.get('/posts', async (req, res) => {
 */
 
 app.post('/createPost', async (req, res) => {
-  res.set("Access-Control-Allow-Origin", "*")
+  res.setHeader("Access-Control-Allow-Origin", "*")
 
   const bb = busboy({ headers: req.headers });
   let tokenId = uuid()

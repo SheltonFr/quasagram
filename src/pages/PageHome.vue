@@ -13,7 +13,7 @@
             <q-item>
               <q-item-section avatar>
                 <q-avatar>
-                  <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+                  <img src="../assets/shelton.jpg">
                 </q-avatar>
               </q-item-section>
 
@@ -26,7 +26,7 @@
             <q-separator />
             <q-img :src="post.imageUrl" />
             <q-card-section>
-              <div class="">{{ post.caption }}}</div>
+              <div class="">{{ post.caption }}</div>
               <div class="text-caption text-grey">
                 {{ niceDate(post.date) }}
               </div>
@@ -70,7 +70,7 @@
         <q-item class="fixed">
           <q-item-section avatar>
             <q-avatar size="48px">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+              <img src="../assets/shelton.jpg">
             </q-avatar>
           </q-item-section>
 
