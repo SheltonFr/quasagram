@@ -76,7 +76,7 @@
 
           <q-item-section>
             <q-item-label>sheltonfr</q-item-label>
-            <q-item-label caption>Teste </q-item-label>
+            <q-item-label caption>Shelton Francisco </q-item-label>
           </q-item-section>
         </q-item>
       </div>
